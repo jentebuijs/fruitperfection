@@ -7,6 +7,8 @@ import ijsblokjes from './assets/ijsblokjes.jpg'
 import {ReactComponent as Shoppingcart} from "./assets/winkelmandje.svg";
 
 function App() {
+    const [messageValue, setMessageValue] = React.useState('');
+    const [checkedTerms, toggleCheckedTerms] = React.useState(false);
     return (
         <Fragment>
             <nav>
@@ -47,6 +49,36 @@ function App() {
                     bevriezen."
                 />
             </main>
+            <footer>
+                <div className="form-container">
+                    <h2>Contactformulier</h2>
+                    <form>
+                        <input
+                            type="text"
+                            placeholder="Type hier jouw bericht"
+                            name="message"
+                            value={messageValue}
+                            className={messageValue.length > 20 ? 'input-error' : 'input-normal'}
+                            onChange={(e) => {setMessageValue(e.target.value)}}
+                        />
+                        {messageValue.length > 20 && <p className="error-message">Dit bericht is te lang!</p>}
+                        <label htmlFor="terms-and-conditions">
+                            <input
+                                type="checkbox"
+                                name="terms-and-conditions"
+                                id="terms-and-conditions"
+                                checked={checkedTerms}
+                                onChange={() => toggleCheckedTerms(!checkedTerms)}
+                            />
+                            Ik ga akkoord met de algemene voorwaarden
+                        </label>
+                    </form>
+                    <button
+                        type="submit"
+                        disabled={!checkedTerms}
+                    >Verstuur</button>
+                </div>
+            </footer>
         </Fragment>
     );
 }
